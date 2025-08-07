@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import './styles/RegisterForm.css'; // Make sure this path is correct
 
 const RegisterForm = () => {
   const navigate = useNavigate();
@@ -47,15 +48,12 @@ const RegisterForm = () => {
   };
 
   return (
-    <div className="flex justify-center items-center h-screen bg-gray-100">
-      <form
-        onSubmit={handleSubmit}
-        className="bg-white p-6 rounded shadow-md w-full max-w-sm"
-      >
-        <h2 className="text-xl font-bold mb-4 text-center">Register</h2>
+    <div className="register-form-container">
+      <form onSubmit={handleSubmit} className="register-form">
+        <h2 className="form-title">Register</h2>
 
-        {error && <p className="text-red-500 mb-2">{error}</p>}
-        {success && <p className="text-green-600 mb-2">{success}</p>}
+        {error && <p className="form-error">{error}</p>}
+        {success && <p className="form-success">{success}</p>}
 
         <input
           type="text"
@@ -64,7 +62,6 @@ const RegisterForm = () => {
           value={formData.username}
           onChange={handleChange}
           required
-          className="w-full p-2 mb-3 border rounded"
         />
         <input
           type="email"
@@ -73,7 +70,6 @@ const RegisterForm = () => {
           value={formData.email}
           onChange={handleChange}
           required
-          className="w-full p-2 mb-3 border rounded"
         />
         <input
           type="password"
@@ -82,22 +78,17 @@ const RegisterForm = () => {
           value={formData.password}
           onChange={handleChange}
           required
-          className="w-full p-2 mb-3 border rounded"
         />
         <select
           name="role"
           value={formData.role}
           onChange={handleChange}
-          className="w-full p-2 mb-4 border rounded"
         >
           <option value="user">User</option>
           <option value="admin">Admin</option>
         </select>
 
-        <button
-          type="submit"
-          className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700"
-        >
+        <button type="submit" className="submit-btn">
           Register
         </button>
       </form>

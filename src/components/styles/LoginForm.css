@@ -1,0 +1,180 @@
+/* General Layout */
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+  /* background: linear-gradient(to bottom right, #2563eb, #93c5fd); */
+}
+
+.login-box {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  max-width: 1000px;
+  width: 100%;
+  background-color: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+@media (max-width: 768px) {
+  .login-box {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Left Side */
+.login-left {
+  background: linear-gradient(to bottom right, #1e40af, #3b82f6);
+  color: #fff;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.login-left h2 {
+  font-size: 32px;
+  margin-bottom: 10px;
+}
+
+.login-left .headline {
+  font-weight: bold;
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.login-left .description {
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* Right Side */
+.login-right {
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-header h3 {
+  font-size: 24px;
+  margin-bottom: 5px;
+}
+
+.form-header p {
+  font-size: 14px;
+  color: #6b7280;
+}
+
+/* Input Fields */
+.input-group {
+  position: relative;
+}
+
+.input-group input {
+  width: 90%;
+  padding: 10px 15px 10px 35px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 14px;
+  outline: none;
+}
+
+.input-icon {
+  position: absolute;
+  top: 50%;
+  left: 10px;
+  transform: translateY(-50%);
+  color: #9ca3af;
+}
+
+.toggle-password {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  font-size: 12px;
+  color: #2563eb;
+  cursor: pointer;
+}
+
+/* Options */
+.options {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  color: #4b5563;
+}
+
+.options a {
+  color: #2563eb;
+  text-decoration: none;
+}
+
+.options a:hover {
+  text-decoration: underline;
+}
+
+/* Buttons */
+.btn-primary {
+  background-color: #2563eb;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.btn-primary:hover {
+  background-color: #1d4ed8;
+}
+
+.btn-secondary {
+  background-color: transparent;
+  border: 1px solid #d1d5db;
+  padding: 10px;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.btn-secondary:hover {
+  background-color: #f3f4f6;
+}
+
+/* Divider */
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #9ca3af;
+  font-size: 14px;
+}
+
+.divider span {
+  flex: 1;
+  height: 1px;
+  background-color: #d1d5db;
+}
+
+/* Footer Text */
+.register-text {
+  text-align: center;
+  font-size: 14px;
+  color: #4b5563;
+}
+
+.register-text a {
+  color: #2563eb;
+  text-decoration: none;
+}
+
+.register-text a:hover {
+  text-decoration: underline;
+}

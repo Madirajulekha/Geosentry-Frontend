@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import './pagestyles/ForgotPasswordPage.css';
 
 const ForgotPasswordPage = () => {
   const [email, setEmail] = useState('');
@@ -46,41 +47,41 @@ const ForgotPasswordPage = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
-      <div className="max-w-md w-full bg-white p-6 rounded shadow">
-        <h2 className="text-2xl font-semibold mb-4 text-center">Forgot Password</h2>
+    <div className="forgot-container">
+      <div className="forgot-box">
+        <h2 className="forgot-title">Forgot Password</h2>
 
-        {error && <p className="text-red-500 text-sm mb-2">{error}</p>}
-        {message && <p className="text-green-500 text-sm mb-2">{message}</p>}
+        {error && <p className="error-message">{error}</p>}
+        {message && <p className="success-message">{message}</p>}
 
-        <form onSubmit={handleForgotPassword} className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium mb-1">Email</label>
+        <form onSubmit={handleForgotPassword} className="forgot-form">
+          <div className="form-group">
+            <label className="form-label">Email</label>
             <input
               type="email"
-              className="w-full border px-3 py-2 rounded"
+              className="form-input"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
             />
           </div>
 
-          <div>
-            <label className="block text-sm font-medium mb-1">New Password</label>
+          <div className="form-group">
+            <label className="form-label">New Password</label>
             <input
               type="password"
-              className="w-full border px-3 py-2 rounded"
+              className="form-input"
               value={newPassword}
               onChange={(e) => setNewPassword(e.target.value)}
               required
             />
           </div>
 
-          <div>
-            <label className="block text-sm font-medium mb-1">Confirm Password</label>
+          <div className="form-group">
+            <label className="form-label">Confirm Password</label>
             <input
               type="password"
-              className="w-full border px-3 py-2 rounded"
+              className="form-input"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
               required
@@ -89,16 +90,16 @@ const ForgotPasswordPage = () => {
 
           <button
             type="submit"
-            className="w-full bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700"
+            className="submit-button"
           >
             Reset Password
           </button>
-          <p className="text-sm text-center text-gray-600">
-        Redirect to {' '}
-        <a href="/login" className="text-blue-600 hover:underline">
-          Login Page
-        </a>
-      </p>
+          <p className="redirect-text">
+            Redirect to {' '}
+            <a href="/login" className="redirect-link">
+              Login Page
+            </a>
+          </p>
         </form>
       </div>
     </div>

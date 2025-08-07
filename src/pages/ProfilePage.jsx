@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import './pagestyles/ProfilePage.css';
 
 const ProfilePage = () => {
   const [user, setUser] = useState(null);
@@ -57,60 +58,60 @@ const ProfilePage = () => {
     }
   };
 
-  if (!user) return <p className="p-6">Loading profile...</p>;
+  if (!user) return <p className="loading-message">Loading profile...</p>;
 
   return (
-    <div className="max-w-md mx-auto bg-white p-6 shadow rounded mt-8">
-      <h2 className="text-2xl font-bold mb-4">Your Details</h2>
+    <div className="profile-container">
+      <h2 className="profile-title">Your Details</h2>
 
-      {message && <p className="text-green-600 mb-3">{message}</p>}
+      {message && <p className="success-message">{message}</p>}
 
-      <div className="space-y-4">
-        <div>
-          <label className="block text-sm font-medium">Username</label>
+      <div className="profile-details">
+        <div className="form-group">
+          <label className="form-label">Username</label>
           {editMode ? (
             <input
               type="text"
               name="username"
               value={formData.username}
               onChange={handleChange}
-              className="w-full px-3 py-2 border rounded"
+              className="form-input"
             />
           ) : (
             <p>{user.username}</p>
           )}
         </div>
 
-        <div>
-          <label className="block text-sm font-medium">Email</label>
+        <div className="form-group">
+          <label className="form-label">Email</label>
           {editMode ? (
             <input
               type="email"
               name="email"
               value={formData.email}
               onChange={handleChange}
-              className="w-full px-3 py-2 border rounded"
+              className="form-input"
             />
           ) : (
             <p>{user.email}</p>
           )}
         </div>
 
-        <div>
-          <label className="block text-sm font-medium">Role</label>
+        <div className="form-group">
+          <label className="form-label">Role</label>
           <p>{user.role}</p>
         </div>
 
-        <div>
-          <label className="block text-sm font-medium">Joined On</label>
+        <div className="form-group">
+          <label className="form-label">Joined On</label>
           <p>{new Date(user.created_at).toLocaleString()}</p>
         </div>
 
         {editMode ? (
-          <div className="flex gap-3 mt-4">
+          <div className="button-group">
             <button
               onClick={handleSave}
-              className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+              className="save-button"
             >
               Save
             </button>
@@ -119,7 +120,7 @@ const ProfilePage = () => {
                 setEditMode(false);
                 setFormData({ username: user.username, email: user.email });
               }}
-              className="bg-gray-400 text-white px-4 py-2 rounded hover:bg-gray-500"
+              className="cancel-button"
             >
               Cancel
             </button>
@@ -127,7 +128,7 @@ const ProfilePage = () => {
         ) : (
           <button
             onClick={() => setEditMode(true)}
-            className="mt-4 bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600"
+            className="edit-button"
           >
             Edit
           </button>

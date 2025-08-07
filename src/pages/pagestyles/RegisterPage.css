@@ -1,0 +1,10 @@
+/* registerpage.css */
+
+.register-page-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f0f4f8; /* soft blue-gray background */
+  padding: 16px;
+}

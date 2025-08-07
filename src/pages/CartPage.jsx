@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import { authFetch } from './utils/authFetch';
+import './pagestyles/CartPage.css';
 
 const CartPage = () => {
   const [cartItems, setCartItems] = useState([]);
@@ -9,13 +11,8 @@ const CartPage = () => {
   const fetchCart = async () => {
     try {
       const token = localStorage.getItem('authToken');
-
-      const cartRes = await fetch('http://localhost:5000/api/cart', {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      if (!cartRes.ok) throw new Error('Failed to fetch cart');
-      const cartData = await cartRes.json();
-
+      const cartData = await authFetch('/api/cart');
+      if (!cartData) return;
       if (cartData.length === 0) {
         setCartItems([]);
         setTotalCost(0);
@@ -46,7 +43,7 @@ const CartPage = () => {
           model: item?.model,
           price,
           availableQuantity: availableQty,
-          quantity: orderedQty, // preserve actual ordered quantity
+          quantity: orderedQty,
           outOfStockQty,
           totalPrice,
         };
@@ -85,8 +82,7 @@ const CartPage = () => {
     }));
 
     const newTotal = cartItems.reduce((acc, item) => {
-      const updatedQty =
-        item.item_id === item_id ? newQuantity : item.quantity;
+      const updatedQty = item.item_id === item_id ? newQuantity : item.quantity;
       return acc + Math.min(updatedQty, item.availableQuantity) * item.price;
     }, 0);
     setTotalCost(newTotal);
@@ -148,8 +144,8 @@ const CartPage = () => {
   };
 
   return (
-    <div className="p-6">
-      <h2 className="text-2xl font-bold mb-4">Your Cart</h2>
+    <div className="cart-container">
+      <h2 className="cart-title">Your Cart</h2>
 
       {loading ? (
         <p>Loading cart...</p>
@@ -157,80 +153,50 @@ const CartPage = () => {
         <p>Your cart is empty.</p>
       ) : (
         <>
-          <ul className="space-y-4">
+          <ul className="cart-list">
             {cartItems.map((item) => (
               <li
                 key={item.item_id}
-                className={`flex justify-between items-center bg-white p-4 rounded shadow ${
-                  item.availableQuantity === 0 ? 'opacity-50' : ''
-                }`}
+                className={`cart-item ${item.availableQuantity === 0 ? 'out-of-stock' : ''}`}
               >
                 <div>
-                  <div className="font-medium">{item.name}</div>
-                  <div className="text-sm text-gray-600">Model: {item.model}</div>
-                  <div className="text-sm text-gray-700">
-                    Price: ${item.price} <br />
+                  <div className="item-name">{item.name}</div>
+                  <div className="item-model">Model: {item.model}</div>
+                  <div className="item-price">Price: ${item.price}</div>
+                  <div className="item-qty">
                     Quantity:
                     <button
-                      onClick={() =>
-                        handleQuantityChange(item.item_id, item.quantity - 1)
-                      }
-                      className="ml-2 px-2 py-1 bg-gray-300 rounded"
+                      onClick={() => handleQuantityChange(item.item_id, item.quantity - 1)}
                       disabled={item.quantity <= 1}
-                    >
-                      −
-                    </button>
-                    <span className="mx-2">{item.quantity}</span>
+                    >−</button>
+                    <span>{item.quantity}</span>
                     <button
-                      onClick={() =>
-                        handleQuantityChange(item.item_id, item.quantity + 1)
-                      }
-                      className="px-2 py-1 bg-gray-300 rounded"
+                      onClick={() => handleQuantityChange(item.item_id, item.quantity + 1)}
                       disabled={item.quantity >= item.availableQuantity}
-                    >
-                      +
-                    </button>
+                    >+</button>
                   </div>
-                  <div className="text-sm text-gray-500">
-                    In Stock: {item.availableQuantity}
-                  </div>
+                  <div className="item-stock">In Stock: {item.availableQuantity}</div>
                   {item.outOfStockQty > 0 && (
-                    <div className="text-red-500 font-semibold">
+                    <div className="item-warning">
                       ⚠ {item.outOfStockQty} item(s) out of stock
                     </div>
                   )}
-                  <div className="text-sm font-semibold mt-1">
-                    Total: ${item.totalPrice.toFixed(2)}
-                  </div>
+                  <div className="item-total">Total: ${item.totalPrice.toFixed(2)}</div>
                 </div>
-                <button
-                  onClick={() => removeItem(item.item_id)}
-                  className="bg-red-500 text-white px-3 py-1 rounded"
-                >
-                  Remove
-                </button>
+                <button className="btn-remove" onClick={() => removeItem(item.item_id)}>Remove</button>
               </li>
             ))}
           </ul>
 
-          <div className="mt-6 text-right">
-            <div className="text-xl font-bold mb-4">
-              Grand Total: ${totalCost.toFixed(2)}
-            </div>
+          <div className="cart-summary">
+            <div className="total-cost">Grand Total: ${totalCost.toFixed(2)}</div>
 
             {Object.keys(modifiedItems).length > 0 &&
               !cartItems.some((item) => item.outOfStockQty > 0) && (
-                <button
-                  onClick={updateCart}
-                  className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
-                >
-                  Update Cart
-                </button>
+                <button className="btn-update" onClick={updateCart}>Update Cart</button>
               )}
             {cartItems.some((item) => item.outOfStockQty > 0) && (
-              <p className="text-red-500 mt-2">
-                Please adjust your cart — some items exceed current stock.
-              </p>
+              <p className="item-warning">Please adjust your cart — some items exceed current stock.</p>
             )}
           </div>
         </>

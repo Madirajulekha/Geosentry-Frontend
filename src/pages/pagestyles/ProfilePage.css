@@ -1,0 +1,111 @@
+/* Container */
+.profile-container {
+  max-width: 700px;
+  margin: 50px auto;
+  background: #f9fafe;
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* Title */
+.profile-title {
+  font-size: 28px;
+  font-weight: 800;
+  margin-bottom: 30px;
+  color: #2c3e50;
+  text-align: center;
+}
+
+/* Success Message */
+.success-message {
+  background-color: #e0ffe0;
+  border: 1px solid #56c56e;
+  padding: 10px 15px;
+  color: #2e7d32;
+  border-radius: 6px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* Form and Details Section */
+.profile-details {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Form Group */
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-label {
+  font-size: 22px;
+  font-weight: 900;
+  margin-bottom: 6px;
+  font-style: bold;
+  color: #000;
+}
+
+.form-input {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 15px;
+  transition: border 0.3s;
+}
+
+.form-input:focus {
+  border-color: #4a90e2;
+  outline: none;
+}
+
+/* Buttons */
+.button-group {
+  display: flex;
+  justify-content: flex-end;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.edit-button,
+.save-button,
+.cancel-button {
+  padding: 10px 18px;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.edit-button {
+  background-color: #007bff;
+  color: white;
+}
+
+.edit-button:hover {
+  background-color: #0056b3;
+}
+
+.save-button {
+  background-color: #28a745;
+  color: white;
+}
+
+.save-button:hover {
+  background-color: #218838;
+}
+
+.cancel-button {
+  background-color: #6c757d;
+  color: white;
+}
+
+.cancel-button:hover {
+  background-color: #5a6268;
+}
