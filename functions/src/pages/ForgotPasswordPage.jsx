@@ -24,21 +24,39 @@ const ForgotPasswordPage = () => {
     }
 
     try {
-      const res = await fetch('http://localhost:5000/api/auth/forgot-password', {
-        method: 'PUT',
+      const res = await fetch('https://us-central1-focal-inquiry-468015-q5.cloudfunctions.net/api/api/auth/forgot-password', {
+        method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, newPassword, confirmPassword })
+        body: JSON.stringify({ email})
       });
 
       const data = await res.json();
+      console.log('Response:', data);
+      let resetToken = data.resetToken;
 
       if (res.ok) {
-        setMessage(data.message);
+        const res = await fetch('https://us-central1-focal-inquiry-468015-q5.cloudfunctions.net/api/api/auth/reset-password', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ token: resetToken, newPassword })
+      });
+        const data = await res.json();
+        console.log('Reset Password Response:', data);
+        if (res.ok) {
+      
+          setMessage(data.message);
         setEmail('');
         setNewPassword('');
         setConfirmPassword('');
+
+        }
+        else {
+          setError(data.message || 'Failed to reset password');
+        } 
+
+        
       } else {
-        setError(data.message || 'Failed to reset password');
+        setError(data.message || 'Enter a valid email');
       }
     } catch (err) {
       console.error('Error:', err);

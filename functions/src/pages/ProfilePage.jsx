@@ -12,7 +12,7 @@ const ProfilePage = () => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const res = await fetch('http://localhost:5000/api/auth/me', {
+        const res = await fetch('https://us-central1-focal-inquiry-468015-q5.cloudfunctions.net/api/api/users/me', {
           headers: { Authorization: `Bearer ${token}` }
         });
         const data = await res.json();
@@ -26,7 +26,7 @@ const ProfilePage = () => {
     };
 
     fetchUser();
-  }, []);
+  }, [token]);
 
   const handleChange = (e) => {
     setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
@@ -34,7 +34,7 @@ const ProfilePage = () => {
 
   const handleSave = async () => {
     try {
-      const res = await fetch('http://localhost:5000/api/auth/update', {
+      const res = await fetch('https://us-central1-focal-inquiry-468015-q5.cloudfunctions.net/api/api/users/me', {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -46,7 +46,8 @@ const ProfilePage = () => {
       const data = await res.json();
 
       if (res.ok) {
-        setUser(data.user);
+        // Accept both {user: {...}} and {...}
+        setUser(data.user || data);
         setMessage('Profile updated successfully!');
         setEditMode(false);
       } else {
@@ -100,11 +101,6 @@ const ProfilePage = () => {
         <div className="form-group">
           <label className="form-label">Role</label>
           <p>{user.role}</p>
-        </div>
-
-        <div className="form-group">
-          <label className="form-label">Joined On</label>
-          <p>{new Date(user.created_at).toLocaleString()}</p>
         </div>
 
         {editMode ? (

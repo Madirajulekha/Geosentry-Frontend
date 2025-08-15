@@ -11,7 +11,6 @@ import DashboardPage from './pages/DashboardPage';
 import Layout from './components/Layout';
 import ProtectedRoute from './components/ProtectedRoute';
 import AuthRoute from './components/AuthRoute';
-import ChangePassword from './components/ChangePassword';
 import ForgotPasswordPage from './pages/ForgotPasswordPage';
 
 function App() {
@@ -95,16 +94,7 @@ function App() {
             </ProtectedRoute>
           }
         />
-        <Route
-          path="/update-password"
-          element={
-            <ProtectedRoute>
-              <Layout>
-                <ChangePassword />
-              </Layout>
-            </ProtectedRoute>
-          }
-        />
+        
         {/* Fallback route: if authenticated, go to dashboard; else to login */}
         <Route
           path="*"

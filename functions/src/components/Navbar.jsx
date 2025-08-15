@@ -50,13 +50,7 @@ const Navbar = () => {
               >
                 My Profile
               </Link>
-              <Link
-                to="/update-password"
-                className="dropdown-item"
-                onClick={() => setShowDropdown(false)}
-              >
-                Change Password
-              </Link>
+              
               <button
                 onClick={logout}
                 className="dropdown-item logout-button"

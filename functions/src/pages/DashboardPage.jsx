@@ -47,7 +47,7 @@ const DashboardPage = () => {
 
     const fetchUser = async () => {
       try {
-        const data = await authFetch('/api/auth/me');
+        const data = await authFetch('/api/users/me');
         if (!data) return;
         setUsername(data.username || 'User');
       } catch (err) {

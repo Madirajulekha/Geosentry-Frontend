@@ -19,37 +19,43 @@ const ItemPage = () => {
   }, []);
 
   const fetchData = async () => {
-    const token = localStorage.getItem('authToken');
-    try {
-      const itemsRes = await fetch('http://localhost:5000/api/items', {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      const itemsData = await itemsRes.json();
+  const token = localStorage.getItem('authToken');
+  try {
+    // Fetch all items (with full details)
+    const itemsRes = await fetch('https://us-central1-focal-inquiry-468015-q5.cloudfunctions.net/api/api/items', {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    const itemsData = await itemsRes.json();
 
-      const cartRes = await fetch('http://localhost:5000/api/cart', {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      const cartData = await cartRes.json();
+    // Fetch cart (already contains all details for items in cart)
+    const cartRes = await fetch('https://us-central1-focal-inquiry-468015-q5.cloudfunctions.net/api/api/cart', {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    const cartData = await cartRes.json();
+// console.log('Cart data:', cartData);
 
-      const cartMap = {};
-      cartData.forEach((entry) => {
-        cartMap[entry.item_id] = entry.quantity;
-      });
+// Set initial quantities: if in cart, use cart quantity; else 1
+const initialQuantities = {};
+itemsData.forEach((item) => {
+  // Find if this item is in the cart
+  // console.log('Checking item:', item);
+  const cartEntry = cartData.find((entry) => entry.item_id === item.id);
+  initialQuantities[item.id] = cartEntry ? cartEntry.quantity : 1;
+});
 
-      const initialQuantities = {};
-      itemsData.forEach((item) => {
-        initialQuantities[item.id] = cartMap[item.id] || 1;
-      });
+setItems(itemsData);
+setQuantities(initialQuantities);
 
-      setItems(itemsData);
-      setQuantities(initialQuantities);
-    } catch (err) {
-      console.error(err);
-      setError('Failed to load items');
-    } finally {
-      setLoading(false);
-    }
-  };
+  // console.log('Fetched items:', itemsData);
+  // console.log('Initial quantities:', initialQuantities);
+
+  } catch (err) {
+    console.error(err);
+    setError('Failed to load items');
+  } finally {
+    setLoading(false);
+  }
+};
 
   const handleIncrement = (id, stock) => {
     setQuantities((prev) => ({
@@ -70,14 +76,14 @@ const ItemPage = () => {
     const quantity = quantities[item.id] || 1;
 
     try {
-      const res = await fetch('http://localhost:5000/api/cart', {
+      const res = await fetch('https://us-central1-focal-inquiry-468015-q5.cloudfunctions.net/api/api/cart', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
-          itemId: item.id,
+          item_id: item.id,
           quantity,
         }),
       });
@@ -106,7 +112,7 @@ const ItemPage = () => {
     e.preventDefault();
     const token = localStorage.getItem('authToken');
     try {
-      const res = await fetch('http://localhost:5000/api/items', {
+      const res = await fetch('https://us-central1-focal-inquiry-468015-q5.cloudfunctions.net/api/api/items', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

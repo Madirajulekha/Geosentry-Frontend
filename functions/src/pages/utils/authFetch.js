@@ -14,7 +14,7 @@ const handleUnauthorized = () => {
 export const authFetch = async (url, options = {}) => {
   const token = localStorage.getItem('authToken');
 
-  const res = await fetch("http://localhost:5000" + url, {
+  const res = await fetch("https://us-central1-focal-inquiry-468015-q5.cloudfunctions.net/api" + url, {
     ...options,
     headers: {
       ...options.headers,
